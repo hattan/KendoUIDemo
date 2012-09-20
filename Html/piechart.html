@@ -1,0 +1,96 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Pie Chart Sample - jsFiddle demo</title>
+  
+    <link href="../Content/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="../Content/styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2012.1.515/styles/kendo.dataviz.min.css" rel="stylesheet"/>
+
+    <style type="text/css">
+        body {
+            font-family: arial;
+        }
+    </style>
+
+    <script src="../Content/js/jquery.min.js"></script>
+    <script src="../Content/js/kendo.all.min.js"></script>
+
+
+<script>
+    $(function () {
+        var netflx = "http://odata.netflix.com/Catalog/Titles?$inlinecount=allpages&$callback=callback&$format=json&$orderby=AverageRating%20desc";
+
+
+        $.ajax({
+            dataType: "jsonp",
+            url: netflx,
+            jsonpCallback: "callback",
+            success: callback
+        });
+
+
+        function callback(result) {
+
+            var data = { isInstant: 0, dvdOnly: 0 };
+            var movies = result["d"]["results"];
+            for (var i = 0; i < movies.length; i++) {
+                var movie = movies[i];
+
+                if (movie.Instant.Available) {
+                    data.isInstant = data.isInstant + 1;
+                }
+                else {
+                    data.dvdOnly = data.dvdOnly + 1;
+                }
+
+
+            }
+            $("#chart").kendoChart({
+                theme: "default",
+                title: {
+                    text: "Instant vs Dvd only Movies on NetFlix"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    labels: {
+                        visible: true,
+                        format: "{0} Movies"
+                    }
+                },
+                series: [{
+                    type: "pie",
+                    data: [{
+                        category: "Insant",
+                        value: data.isInstant
+                    }, {
+                        category: "Dvd Only",
+                        value: data.dvdOnly
+                    }]
+                }],
+                tooltip: {
+                    visible: true,
+                    format: "{0}%"
+                }
+            });
+        }
+    });
+
+</script>
+
+
+</head>
+<body>
+  <div class="chart-wrapper">
+    <div id="chart"></div>
+</div>
+  
+</body>
+
+
+</html>
+

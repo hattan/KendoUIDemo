@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Content/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="../Content/styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2012.2.913/styles/kendo.mobile.all.min.css" rel="stylesheet"/>
+    <style type="text/css">
+        body {
+            font-family: arial;
+        }
+    </style>
+
+    <script src="../Content/js/jquery.min.js"></script>
+    <script src="../Content/js/kendo.all.min.js"></script>
+    
+</head>
+<body>
+ <div data-role="view" data-init="mobileListViewPullToRefresh" data-title="Pull to refresh">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a data-align="right" data-role="button" class="nav-button" href="#index">Index</a>
+        </div>
+    </header>
+
+    <ul id="pull-to-refresh-listview"></ul>
+</div>
+
+<script id="pull-to-refresh-template" type="text/x-kendo-template">
+    <div class="tweet">
+        <img class="pullImage" src="#= BoxArt.SmallUrl #" />#= Name #
+    </div>
+</script>
+
+<script>
+    function mobileListViewPullToRefresh() {
+
+        var ds = new kendo.data.DataSource({
+            type: "odata",
+            transport: {
+                read: "http://odata.netflix.com/v2/Catalog/Titles"
+            },
+            schema: {
+                model: {
+                    fields: {
+                        Name: { type: "string" },
+                        AverageRating: { type: "number" },
+                        ReleaseYear: { type: "string" }
+                    }
+                }
+            },
+            pageSize: 10
+        });
+
+        $("#pull-to-refresh-listview").kendoMobileListView({
+            dataSource: ds,
+            pullToRefresh: true,
+            appendOnRefresh: true,
+            template: $("#pull-to-refresh-template").text(),
+            endlessScroll: true,
+            pullParameters: function (item) {
+                return {
+                    since_id: item.id_str,
+                    page: 1
+                };
+            }
+        });
+    }
+</script>
+
+<style scoped>
+    .tweet {
+        font-size: .8em;
+        line-height: 1.4em;
+    }
+    .pullImage {
+        width: 64px;
+        height: 64px;
+        border-radius: 3px;
+        float: left;
+        margin-right: 10px;
+    }
+    .sublink {
+        font-size: .9em;
+        font-weight: normal;
+        display: inline-block;
+        padding: 3px 3px 0 0;
+        text-decoration: none;
+        opacity: .8;
+    }
+</style>
+
+
+<script>
+    var app = new kendo.mobile.Application(document.body);
+</script>
+</body>
+</html>

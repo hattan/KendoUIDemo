@@ -1,0 +1,19 @@
+﻿@model List<KendoUIDemo.Models.Movie>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@(Html.Kendo()
+    .Grid<KendoUIDemo.Models.Movie>(Model)
+    .Name("Grid1")
+    .Columns(c=>
+                 {
+                     c.Bound(i => i.Name);
+                     c.Bound(i => i.Rating).Title("Average Rating");
+                     c.Bound(i => i.Year).Title("Release Year");
+                 })
+    .Pageable()
+    .Sortable()
+
+ )

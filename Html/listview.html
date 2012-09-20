@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Content/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="../Content/styles/kendo.default.min.css" rel="stylesheet" />
+    <link href="../Content/movie.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            font-family: arial;
+        }
+    </style>
+
+    <script src="../Content/js/jquery.min.js"></script>
+    <script src="../Content/js/kendo.all.min.js"></script>
+    <script>
+        $(function () {
+
+            var ds = new kendo.data.DataSource({
+                type: "odata",
+                transport :  {
+                    read: "http://odata.netflix.com/v2/Catalog/Titles"
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            Name: { type: "string" },
+                            AverageRating: { type: "number" },
+                            ReleaseYear: { type: "string" }
+                        }
+                    }
+                },
+                pageSize:10
+            });
+
+    $("#pager").kendoPager({
+       dataSource: ds
+    });
+
+    $("#listView").kendoListView({
+        dataSource: ds,
+        template: kendo.template($("#template").html())
+    });
+})
+</script>
+</head>
+<body>
+    <div id="listView"></div>
+
+    <div id="pager" class="k-pager-wrap"></div>
+    
+    <script type="text/x-kendo-tmpl" id="template">
+    <div class="movie">
+       <img src="${BoxArt.SmallUrl}" alt="${Name} image" />
+        <h3>${Name}</h3>
+      <dl>
+            <dt>Year:</dt>
+            <dd>${ReleaseYear}</dd>
+        </dl>
+    </div>
+    </script> 
+</body>
+</html>

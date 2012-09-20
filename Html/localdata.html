@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Content/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="../Content/styles/kendo.default.min.css" rel="stylesheet" />
+    <style type="text/css">
+        body {
+            font-family: arial;
+        }
+    </style>
+
+    <script src="../Content/js/jquery.min.js"></script>
+    <script src="../Content/js/kendo.all.min.js"></script>
+    <script>
+        $(function () {
+
+            var ds = new kendo.data.DataSource({
+                data: [
+                    { Name: 'Maos Last Dancer', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: 'Iron Man 2', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'How to Train Your Dragon', Rating: 4.3, Year: '1/1/2010' },
+                    { Name: 'The Cabin in the Woods', Rating: 4, Year: '1/1/2011' },
+                    { Name: 'Wake Up', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'The Fighter', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: 'Despicable Me', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Harry Potter and the Deathly Hallows: Part I', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Toy Story 3', Rating: 4.3, Year: '1/1/2010' },
+                    { Name: 'Harry Potter and the Deathly Hallows: Part II', Rating: 4.4, Year: '1/1/2011' },
+                    { Name: 'The 5th Quarter', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Megamind', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Miami Trauma: Season 1', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Turtle: The Incredible Journey', Rating: 4, Year: '1/1/2011' },
+                    { Name: 'Rubicon: Season 1', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Kung Fu Panda 2', Rating: 4, Year: '1/1/2011' },
+                    { Name: 'American: The Bill Hicks Story', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: '13 Assassins', Rating: 4, Year: '1/1/2011' },
+                    { Name: 'Secretariat', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Red Dawn', Rating: 4, Year: '1/1/2012' },
+                    { Name: 'Tangled', Rating: 4.3, Year: '1/1/2010' },
+                    { Name: 'Sins of the Mother', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Letters to God', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Planet Hulk', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Bhutto', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'GasLand', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Restrepo', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Waste Land', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Boy', Rating: 4.3, Year: '1/1/2010' },
+                    { Name: 'Tucker & Dale vs. Evil', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: '180° South', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: '30 for 30: Winning Time: Reggie Miller vs. The New York Knicks', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'My Name is Khan', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Inception', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Roads to Memphis: The Assassination of Martin Luther King, Jr.: American Experience', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'The Buddha', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Love', Rating: 4.1, Year: '1/1/2011' },
+                    { Name: 'Temple Grandin', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Bugs Bunny: Hare Extraordinaire', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: 'Horses', Rating: 4.3, Year: '1/1/2010' },
+                    { Name: 'National Geographic: American Serengeti', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'UFC 110: Nogueira vs. Velasquez: Bonus Material', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: 'Hood to Coast', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'The Way', Rating: 4.1, Year: '1/1/2010' },
+                    { Name: 'The Happy Poet', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'NY Export: Opus Jazz', Rating: 4.2, Year: '1/1/2010' },
+                    { Name: 'Batman: Under The Red Hood', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'Undisputed III: Redemption', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'The Round Up', Rating: 4, Year: '1/1/2010' },
+                    { Name: 'The Kings Speech', Rating: 4.3, Year: '1/1/2010' }
+                ],
+                schema: {
+                    model: {
+                        fields: {
+                            Name: { type: "string" },
+                            Rating: { type: "number" },
+                            Year: { type: "date" }
+                        }
+                    }
+                },
+                pageSize:10
+            });
+
+            $("#grid").kendoGrid({
+                dataSource : ds,
+                sortable: true,
+                pageable: true,
+                filterable: true,
+                columns: [
+                    {
+                        field: "Name",
+                        title: "Title",
+                        width: 300
+                    },
+                    {
+                        field: "Rating",
+                        title: "Rating",
+                        width: 100
+                    },
+                    {
+                        field: "Year",
+                        title: "Release Year",
+                        template: '#= kendo.toString(Year,"yyyy") #',
+                        width: 100
+                    }
+                ]                         
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="grid"></div>
+</body>
+</html>

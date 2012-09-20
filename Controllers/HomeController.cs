@@ -16,10 +16,10 @@ namespace KendoUIDemo.Controllers
             return View(movies);
         }
 
-        public JsonResult Ajax()
+        public JsonResult Ajax([DataSourceRequest] DataSourceRequest request)
         {
             var movies = MovieFactory.Create();
-            return Json(movies, JsonRequestBehavior.AllowGet);
+            return Json(movies.ToDataSourceResult(request));
         }
 
         public ActionResult About()

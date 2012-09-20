@@ -15,5 +15,11 @@
                  })
     .Pageable()
     .Sortable()
-
+    .Scrollable() 
+    .Filterable()
+    .Groupable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("Ajax", "Home"))
+     )
  )
